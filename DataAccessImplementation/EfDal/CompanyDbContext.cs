@@ -6,8 +6,12 @@ namespace EfDal
 {
     public class CompanyDbContext : DbContext
     {
-        public DbSet<Company> Company { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
 
+        public CompanyDbContext()
+        {
+
+        }
         public CompanyDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
