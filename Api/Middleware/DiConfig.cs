@@ -2,8 +2,6 @@
 using DomainLogic;
 using EfDal;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Text.Json;
 
 namespace Api.Middleware
 {

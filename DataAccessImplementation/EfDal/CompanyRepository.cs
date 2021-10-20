@@ -19,9 +19,11 @@ namespace EfDal
 
         public async Task<IEnumerable<Company>> GetAllAsync() => (await _context.Company.ToListAsync()).AsEnumerable();
 
-        public Task<Company> GetByIdAsync(int id) => _context.Company.SingleAsync(x => x.Id == id);
+        public async Task<Company> GetByIdAsync(int id) 
+            => (await _context.Company.SingleOrDefaultAsync(x => x.Id == id)) ?? throw new EntityNotFoundException<int>(id);
 
-        public Task<Company> GetByIsinAsync(string isin) => _context.Company.SingleAsync(x => x.ISIN == isin);
+        public async Task<Company> GetByIsinAsync(string isin) 
+            => (await _context.Company.SingleOrDefaultAsync(x => x.ISIN == isin)) ?? throw new EntityNotFoundException<string>(isin);
 
         public Task SaveChangesAsync() => _context.SaveChangesAsync();
 

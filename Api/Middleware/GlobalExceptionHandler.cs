@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using DataAccessInterfaces;
+using System.Net;
 using System.Text.Json;
 
 namespace Api.Middleware
@@ -29,18 +30,27 @@ namespace Api.Middleware
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var reference = Guid.NewGuid();
-            _logger.LogError(exception, $"Unhandled exception: {reference}");
-
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(new 
+            if (exception is EntityNotFoundException)
+            {
+                _logger.LogInformation(exception, context.Request.Path);
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                await context.Response.WriteAsync("");
+                return;
+            }
+
+
+            var reference = Guid.NewGuid();
+            _logger.LogError(new Exception(reference.ToString(), exception), $"Unhandled exception");
+
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
             {
                 context.Response.StatusCode,
                 Message = $"Internal Server Error, reference: {reference}."
             }));
         }
     }
-    
+
 }
