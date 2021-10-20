@@ -1,4 +1,5 @@
 ﻿using DataAccessInterfaces;
+using FluentValidation;
 using System.Net;
 using System.Text.Json;
 
@@ -40,6 +41,13 @@ namespace Api.Middleware
                 return;
             }
 
+            if (exception is ValidationException validationException)
+            {
+                _logger.LogInformation(exception, "invalid");
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await context.Response.WriteAsync(JsonSerializer.Serialize(validationException.Errors));
+                return;
+            }
 
             var reference = Guid.NewGuid();
             _logger.LogError(new Exception(reference.ToString(), exception), $"Unhandled exception");
