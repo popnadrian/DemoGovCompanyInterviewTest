@@ -14,8 +14,8 @@ namespace DomainLogic
 
             RuleFor(x => x.ISIN).NotEmpty().Length(12).Matches(@"[A-Za-z]{2}\w{10}");
 
-            // most voted here, no protocol: https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-            RuleFor(x => x.Website).NotEmpty().Matches(@"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)");
+            // https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation/42619368
+            RuleFor(x => x.Website).NotEmpty().Matches(@"^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$");
         }
 
         public void ValidateAndThrow(Company company)
