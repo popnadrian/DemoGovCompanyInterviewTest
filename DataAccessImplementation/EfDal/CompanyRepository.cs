@@ -1,27 +1,33 @@
 ﻿using DataAccessInterfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace EfDal
 {
     public class CompanyRepository : ICompanyRepository
     {
-        public Task CreateAsync(Company company)
+        private readonly CompanyDbContext _context;
+
+        public CompanyRepository(CompanyDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<Company>> GetAllAsync()
+        public void Create(Company company)
         {
-            throw new NotImplementedException();
+            _context.Add(company);
         }
 
-        public Task<Company> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Company>> GetAllAsync() => (await _context.Company.ToListAsync()).AsEnumerable();
 
-        public Task UpdateAsync(Company company)
+        public Task<Company> GetByIdAsync(int id) => _context.Company.SingleAsync(x => x.Id == id);
+
+        public Task<Company> GetByIsinAsync(string isin) => _context.Company.SingleAsync(x => x.ISIN == isin);
+
+        public Task SaveChangesAsync() => _context.SaveChangesAsync();
+
+        public void Update(Company company)
         {
-            throw new NotImplementedException();
+            _context.Update(company);
         }
     }
 }

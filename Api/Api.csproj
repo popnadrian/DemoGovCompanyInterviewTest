@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj" />
+    <ProjectReference Include="..\DomainLogic\DomainLogic.csproj" />
+  </ItemGroup>
+
 </Project>

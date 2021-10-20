@@ -2,12 +2,16 @@
 {
     public interface ICompanyRepository
     {
-        Task CreateAsync(Company company);
+        void Create(Company company);
 
-        Task UpdateAsync(Company company);
+        void Update(Company company);
 
-        Task<IEnumerable< Company>> GetAllAsync();
+        Task SaveChangesAsync();
 
-        Task<Company> GetByIdAsync(int id); 
+        Task<IEnumerable<Company>> GetAllAsync();
+
+        Task<Company> GetByIdAsync(int id);
+
+        Task<Company> GetByIsinAsync(string isin);
     }
 }
