@@ -1,3 +1,5 @@
+using Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,9 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureApplicationServices();
 var app = builder.Build();
 
 app.UseMiddleware<Api.Middleware.ExceptionMiddleware>();
+app.InitDb();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAccessImplementation\EfDal\EfDal.csproj" />
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj" />
     <ProjectReference Include="..\DomainLogic\DomainLogic.csproj" />
   </ItemGroup>

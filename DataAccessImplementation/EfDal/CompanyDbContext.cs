@@ -12,18 +12,15 @@ namespace EfDal
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            builder.Entity<Company>()
+                .HasKey(c => c.Id);
 
             builder.Entity<Company>()
                 .HasIndex(c => c.ISIN)
                 .IsUnique();
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite($"Data Source=company.db");
 
-            base.OnConfiguring(optionsBuilder);
+            base.OnModelCreating(builder);
         }
     }
 }
