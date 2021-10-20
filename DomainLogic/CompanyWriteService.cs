@@ -15,7 +15,7 @@ namespace DomainLogic
 
         public Task AddAsync(Company company)
         {
-            _validator.Validate(company);
+            _validator.ValidateAndThrow(company);
 
             _repository.Create(company);
 
@@ -24,7 +24,7 @@ namespace DomainLogic
 
         public Task UpdateAsync(Company company)
         {
-            _validator.Validate(company);
+            _validator.ValidateAndThrow(company);
 
             _repository.Update(company);
 

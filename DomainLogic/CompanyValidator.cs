@@ -18,9 +18,12 @@ namespace DomainLogic
             RuleFor(x => x.Website).NotEmpty().Matches(@"[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)");
         }
 
-        public new void Validate(Company company)
+        public void ValidateAndThrow(Company company)
         {
-            var r = base.Validate(company);
+            // keeping this as a prove of concept
+            // TODO: investigate how to use FluentValidator with API
+
+            var r = Validate(company);
 
             if (r == null || r.IsValid) return;
 
